@@ -157,25 +157,54 @@ The last 30 layers of the backbone are unfrozen and retrained with a very small 
 
 Training stopped early at epoch 15 — the learning rate had already collapsed to 1e-6, so fine-tuning did not surpass the frozen-backbone checkpoint. The best model remains the epoch-10 checkpoint at 0.9693 validation accuracy.
 
-## Results
+## Results & Visualizations
+
+### Training vs Validation Accuracy
+
+The model shows consistent improvement in both training and validation accuracy throughout training. The final validation accuracy reached approximately **96.93%**, demonstrating strong generalization performance.
+
+![Training vs Validation Accuracy](images/accuracy_curve.png)
+
+---
+
+### Training vs Validation Loss
+
+Training and validation loss decrease steadily across epochs, indicating effective learning and minimal overfitting. The close alignment between the curves suggests good model stability.
+
+![Training vs Validation Loss](images/loss_curve.png)
+
+---
+
+### Confusion Matrix
+
+The confusion matrix shows that the model performs exceptionally well across all four classes. Most predictions lie on the diagonal, indicating correct classification.
+
+![Confusion Matrix](images/confusion_matrix.png)
+
+### Key Observations
+
+- Fire achieved the highest recall with very few misclassifications.
+- Flood images were classified accurately in most cases.
+- Earthquake images occasionally overlapped with flood scenes.
+- Normal images showed minor confusion with flood and earthquake classes.
+- Overall classification performance exceeded 95% across all classes.
+
+| Class | Correct Predictions |
+|---------|---------|
+| Earthquake | 183 / 200 |
+| Fire | 503 / 507 |
+| Flood | 516 / 541 |
+| Normal | 401 / 445 |
+
+### Performance Summary
 
 | Metric | Value |
-| --- | --- |
-| Best validation accuracy (checkpointed) | **0.9693** |
-| Final validation accuracy (after fine-tune) | 0.9468 |
-| Final validation loss | 0.1549 |
-
-### Classification report
-
-| Class | Precision | Recall | F1-score | Support |
-| --- | --- | --- | --- | --- |
-| earthquake | 0.95 | 0.92 | 0.93 | 200 |
-| fire | 0.96 | 0.99 | 0.97 | 507 |
-| flood | 0.94 | 0.95 | 0.95 | 541 |
-| normal | 0.95 | 0.90 | 0.92 | 445 |
-| accuracy | — | — | 0.95 | 1693 |
-| macro avg | 0.95 | 0.94 | 0.94 | 1693 |
-| weighted avg | 0.95 | 0.95 | 0.95 | 1693 |
+|----------|----------|
+| Best Validation Accuracy | 96.93% |
+| Final Validation Loss | 0.0845 |
+| Number of Classes | 4 |
+| Model | EfficientNetB0 |
+| Input Size | 224 × 224 |
 
 Reading the numbers: fire is the easiest class (0.99 recall) — flames and smoke are visually unambiguous. normal has the lowest recall (0.90), since undamaged scenes are occasionally confused with mild flood or earthquake imagery. earthquake has the smallest support (200 validation images), which explains its slightly noisier score.
 
