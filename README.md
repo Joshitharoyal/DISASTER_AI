@@ -159,35 +159,49 @@ Training stopped early at epoch 15 — the learning rate had already collapsed t
 
 ## Results & Visualizations
 
+
 ### Training vs Validation Accuracy
 
-The model shows consistent improvement in both training and validation accuracy throughout training. The final validation accuracy reached approximately **96.93%**, demonstrating strong generalization performance.
+The model achieved a best validation accuracy of **96.93%**, showing strong generalization capability.
 
-![Training vs Validation Accuracy](images/accuracy_curve.png)
+<img src="images/accuracy_curve.png" width="800">
 
 ---
 
 ### Training vs Validation Loss
 
-Training and validation loss decrease steadily across epochs, indicating effective learning and minimal overfitting. The close alignment between the curves suggests good model stability.
+Training and validation loss decreased consistently, indicating stable learning and minimal overfitting.
 
-![Training vs Validation Loss](images/loss_curve.png)
+<img src="images/loss_curve.png" width="800">
 
 ---
 
 ### Confusion Matrix
 
-The confusion matrix shows that the model performs exceptionally well across all four classes. Most predictions lie on the diagonal, indicating correct classification.
+The confusion matrix demonstrates high classification performance across all four disaster categories.
 
-![Confusion Matrix](images/confusion_matrix.png)
+<img src="images/confusion_matrix.png" width="700">
+
+---
 
 ### Key Observations
 
-- Fire achieved the highest recall with very few misclassifications.
-- Flood images were classified accurately in most cases.
+- Fire images achieved the highest recall.
+- Flood images were classified accurately with few errors.
 - Earthquake images occasionally overlapped with flood scenes.
-- Normal images showed minor confusion with flood and earthquake classes.
-- Overall classification performance exceeded 95% across all classes.
+- Normal images showed minor confusion with earthquake and flood classes.
+- Overall validation accuracy reached **96.93%**.
+
+### Performance Summary
+
+| Metric | Value |
+|----------|----------|
+| Model | EfficientNetB0 |
+| Classes | Earthquake, Fire, Flood, Normal |
+| Input Size | 224 × 224 |
+| Best Validation Accuracy | 96.93% |
+| Validation Loss | 0.0845 |
+| Framework | TensorFlow / Keras |
 
 | Class | Correct Predictions |
 |---------|---------|
@@ -196,15 +210,6 @@ The confusion matrix shows that the model performs exceptionally well across all
 | Flood | 516 / 541 |
 | Normal | 401 / 445 |
 
-### Performance Summary
-
-| Metric | Value |
-|----------|----------|
-| Best Validation Accuracy | 96.93% |
-| Final Validation Loss | 0.0845 |
-| Number of Classes | 4 |
-| Model | EfficientNetB0 |
-| Input Size | 224 × 224 |
 
 Reading the numbers: fire is the easiest class (0.99 recall) — flames and smoke are visually unambiguous. normal has the lowest recall (0.90), since undamaged scenes are occasionally confused with mild flood or earthquake imagery. earthquake has the smallest support (200 validation images), which explains its slightly noisier score.
 
