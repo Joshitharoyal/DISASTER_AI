@@ -206,6 +206,52 @@ The confusion matrix demonstrates high classification performance across all fou
 
 
 Reading the numbers: fire is the easiest class (0.99 recall) — flames and smoke are visually unambiguous. normal has the lowest recall (0.90), since undamaged scenes are occasionally confused with mild flood or earthquake imagery. earthquake has the smallest support (200 validation images), which explains its slightly noisier score.
+## System Architecture
+
+```text
+Input Image
+      │
+      ▼
+Image Preprocessing
+(Resize 224×224, RGB Conversion)
+      │
+      ▼
+Data Augmentation
+(Rotation, Zoom, Flip, Shift)
+      │
+      ▼
+EfficientNetB0
+(ImageNet Pre-trained Backbone)
+      │
+      ▼
+GlobalAveragePooling2D
+      │
+      ▼
+BatchNormalization
+      │
+      ▼
+Dropout(0.3)
+      │
+      ▼
+Dense(256, ReLU)
+      │
+      ▼
+BatchNormalization
+      │
+      ▼
+Dropout(0.3)
+      │
+      ▼
+Dense(4, Softmax)
+      │
+      ▼
+Prediction
+(Earthquake / Fire / Flood / Normal)
+      │
+      ▼
+Safety Recommendation
+```
+
 
 ## Evaluation
 
@@ -214,18 +260,28 @@ The final model achieved a validation loss of 0.1549 and a validation accuracy o
 Both training and validation accuracy curves track closely with no widening gap, indicating that the dropout, batch normalisation, and augmentation successfully controlled overfitting.
 
 The confusion matrix is strongly diagonal; the majority of residual error sits between normal and flood.
+## Installation
+
+```bash
+git clone https://github.com/<your-username>/DISASTER_AI.git
+cd DISASTER_AI
+
+pip install -r requirements.txt
+
+python app.py
+```
 
 ## Usage
 
-1. Install dependencies: TensorFlow, KaggleHub, Pillow, NumPy, scikit-learn, Matplotlib, and Seaborn.
-2. Download the dataset from Kaggle and merge the two source folders into the four-class layout.
-3. Preprocess the images (resize to 224x224, convert to RGB, remove corrupt files).
-4.Split the Data into (Train(80%)/Validation(20%))
-5.Train Data undergoes Data Augmentation 
-6. Train the model with the stage-1 settings.
+1. Install dependencies.
+2. Download and merge the dataset.
+3. Preprocess the images (resize, RGB conversion, remove corrupt files).
+4. Split the dataset into Training (80%) and Validation (20%).
+5. Apply data augmentation to the training set.
+6. Train the model using EfficientNetB0.
 7. Fine-tune the last 30 layers.
-8. Save the trained model in Keras format.
-9. Load the saved model and run predictions on new images.
+8. Save the trained model.
+9. Run predictions on new images.
 
 ### Emergency safety precautions
 
@@ -246,16 +302,61 @@ A sample prediction on a flood image reports the class as flood with a confidenc
 - data/merged_dataset/ — earthquake, fire, flood, normal
 - models/ — best_cnn_model.keras (best checkpoint) and efficientnetb0_disaster_classifier.keras
 - outputs/ — accuracy_curve.png, loss_curve.png, confusion_matrix.png
+## Web Application Workflow
 
+```text
+User Uploads Image
+        │
+        ▼
+Flask Web Interface
+        │
+        ▼
+Image Preprocessing
+        │
+        ▼
+EfficientNetB0 Model
+        │
+        ▼
+Prediction
+        │
+        ▼
+Confidence Score
+        │
+        ▼
+Emergency Safety Advice
+```
+## Deployment
+
+The trained EfficientNetB0 model is integrated with a Flask web application for real-time disaster image classification.
+
+### Features
+
+- Upload disaster images through a web interface.
+- Predict disaster category in real time.
+- Display confidence score.
+- Provide emergency safety precautions.
+- Lightweight and easy to deploy.
+
+### Technology Stack
+
+- Python
+- Flask
+- TensorFlow / Keras
+- HTML
+- CSS
+- JavaScript
 ## Requirements
 
-- TensorFlow 
-- kagglehub
-- Pillow
-- Shutil
-- scikit-learn
-- Matplotlib
-- Seaborn
+```text
+tensorflow==2.19.0
+kagglehub
+numpy
+pillow
+scikit-learn
+matplotlib
+seaborn
+flask
+```
 
 A GPU runtime is strongly recommended — each epoch took roughly 12–15 minutes on the training hardware used here.
 
