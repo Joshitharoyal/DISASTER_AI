@@ -1,0 +1,11 @@
+##Requirements
+```text
+tensorflow==2.19.0
+kagglehub
+numpy
+pillow
+scikit-learn
+matplotlib
+seaborn
+flask
+```
