@@ -159,30 +159,24 @@ Training stopped early at epoch 15 — the learning rate had already collapsed t
 
 ## Results & Visualizations
 
-
-### Training vs Validation Accuracy
-
-The model achieved a best validation accuracy of **96.93%**, showing strong generalization capability.
-
-<img src="images/accuracy_curve.png" width="800">
-
----
-
-### Training vs Validation Loss
-
-Training and validation loss decreased consistently, indicating stable learning and minimal overfitting.
-
-<img src="images/loss_curve.png" width="800">
-
----
-
 ### Confusion Matrix
 
 The confusion matrix demonstrates high classification performance across all four disaster categories.
 
-<img src="images/confusion_matrix.png" width="700">
 
----
+| Actual \ Predicted | Earthquake | Fire | Flood | Normal |
+|-------------------|-----------:|------:|------:|-------:|
+| **Earthquake** | **183** | 3 | 12 | 2 |
+| **Fire** | 0 | **503** | 0 | 4 |
+| **Flood** | 6 | 2 | **516** | 17 |
+| **Normal** | 4 | 17 | 23 | **401** |
+
+**Total Validation Samples:** 1693
+
+**Correct Predictions:** 1603
+
+**Validation Accuracy:** 94.69%
+
 
 ### Key Observations
 
