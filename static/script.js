@@ -1,6 +1,3 @@
-// ======================================================
-// DOM ELEMENTS
-// ======================================================
 
 const fileInput = document.getElementById("fileInput");
 const startCameraBtn = document.getElementById("startCameraBtn");
@@ -35,15 +32,8 @@ document.getElementById("chatInput");
 const sendChatBtn =
 document.getElementById("sendChatBtn");
 
-// ======================================================
-
 let currentImage = null;
 let cameraStream = null;
-
-// ======================================================
-// IMAGE UPLOAD
-// ======================================================
-
 fileInput.addEventListener("change", () => {
 
     const file = fileInput.files[0];
@@ -59,11 +49,6 @@ fileInput.addEventListener("change", () => {
     video.hidden = true;
 
 });
-
-// ======================================================
-// START CAMERA
-// ======================================================
-
 startCameraBtn.addEventListener("click", async () => {
 
     try {
@@ -93,11 +78,6 @@ startCameraBtn.addEventListener("click", async () => {
     }
 
 });
-
-// ======================================================
-// CAPTURE IMAGE
-// ======================================================
-
 captureBtn.addEventListener("click", () => {
 
     const ctx = canvas.getContext("2d");
@@ -127,10 +107,6 @@ captureBtn.addEventListener("click", () => {
     }
 
 });
-// ======================================================
-// PREDICT IMAGE
-// ======================================================
-
 predictBtn.addEventListener("click", async () => {
 
     if (!currentImage) {
@@ -151,7 +127,6 @@ predictBtn.addEventListener("click", async () => {
 
         let response;
 
-        // Upload Image
         if (currentImage instanceof File) {
 
             const formData = new FormData();
@@ -167,8 +142,6 @@ predictBtn.addEventListener("click", async () => {
             });
 
         }
-
-        // Camera Image
         else {
 
             response = await fetch("/predict", {
@@ -219,11 +192,6 @@ predictBtn.addEventListener("click", async () => {
 
 });
 
-
-// ======================================================
-// SHOW PREDICTION
-// ======================================================
-
 function showPrediction(data) {
 
     result.hidden = false;
@@ -258,7 +226,6 @@ function showPrediction(data) {
 
     updatePredictionSummary(data);
 
-    // Automatically move to Prediction Result
     setTimeout(() => {
 
         result.scrollIntoView({
@@ -272,11 +239,6 @@ function showPrediction(data) {
     }, 300);
 
 }
-
-
-// ======================================================
-// PROBABILITY BARS
-// ======================================================
 
 function createProbabilityBars(probabilities) {
 
@@ -332,11 +294,6 @@ function createProbabilityBars(probabilities) {
 
 }
 
-
-// ======================================================
-// LATEST PREDICTION ONLY
-// ======================================================
-
 function updatePredictionSummary(data) {
 
     const oldSummary = document.getElementById(
@@ -380,10 +337,6 @@ function updatePredictionSummary(data) {
         chatWindow.scrollHeight;
 
 }
-// ======================================================
-// EMERGENCY PRECAUTIONS
-// ======================================================
-
 function showPrecautions(label){
 
     const precautions={
@@ -460,10 +413,6 @@ function showPrecautions(label){
 
 }
 
-// ======================================================
-// CHAT WINDOW
-// ======================================================
-
 function addChatMessage(message,sender){
 
     const div=document.createElement("div");
@@ -477,11 +426,6 @@ function addChatMessage(message,sender){
     chatWindow.scrollTop=chatWindow.scrollHeight;
 
 }
-
-// ======================================================
-// TYPING
-// ======================================================
-
 function showTyping(){
 
     const div=document.createElement("div");
@@ -509,10 +453,6 @@ function removeTyping(){
     }
 
 }
-
-// ======================================================
-// CHATBOT
-// ======================================================
 
 async function sendChatMessage(){
 
@@ -590,10 +530,6 @@ async function sendChatMessage(){
 
 }
 
-// ======================================================
-// EVENTS
-// ======================================================
-
 sendChatBtn.addEventListener(
 
     "click",
@@ -618,10 +554,6 @@ chatInput.addEventListener(
 
 );
 
-// ======================================================
-// CAMERA CLEANUP
-// ======================================================
-
 window.addEventListener("beforeunload",()=>{
 
     if(cameraStream){
@@ -636,10 +568,6 @@ window.addEventListener("beforeunload",()=>{
 
 });
 
-// ======================================================
-// WELCOME MESSAGE
-// ======================================================
-
 window.addEventListener("load",()=>{
 
     addChatMessage(
@@ -651,10 +579,6 @@ window.addEventListener("load",()=>{
     );
 
 });
-
-// ======================================================
-// BUTTON RIPPLE EFFECT
-// ======================================================
 
 document.querySelectorAll("button").forEach(button=>{
 
