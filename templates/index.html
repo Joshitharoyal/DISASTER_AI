@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Disaster Image Classification</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ======================================== -->
+<!-- NAVBAR -->
+<!-- ======================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        🌍 Disaster AI
+
+    </div>
+
+    <ul>
+
+        <li><a href="#home">Home</a></li>
+
+        <li><a href="#about">About</a></li>
+
+        <li><a href="#classifier">Classifier</a></li>
+
+        <li><a href="#assistant">Assistant</a></li>
+
+    </ul>
+
+</nav>
+
+<!-- ======================================== -->
+<!-- HERO -->
+<!-- ======================================== -->
+
+<section class="hero" id="home">
+
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+
+        <h1>
+
+            Protecting Communities with
+
+            <span>
+
+                AI-Powered Disaster Detection
+
+            </span>
+
+        </h1>
+
+        <p>
+
+            Upload or capture an image to identify disasters,
+            receive emergency precautions,
+            and chat with an AI assistant.
+
+        </p>
+
+        <a href="#classifier"
+
+           class="hero-btn">
+
+            Analyze Image
+
+        </a>
+
+    </div>
+
+</section>
+
+<!-- ======================================== -->
+<!-- ABOUT -->
+<!-- ======================================== -->
+
+<section class="about"
+
+         id="about">
+
+    <div class="section-title">
+
+        <h2>
+
+            About This System
+
+        </h2>
+
+        <p>
+
+            Intelligent disaster recognition using Artificial Intelligence.
+
+        </p>
+
+    </div>
+
+    <div class="about-grid">
+
+        <div class="card">
+
+            <div class="icon">
+
+                🔥
+
+            </div>
+
+            <h3>
+
+                Fire Detection
+
+            </h3>
+
+            <p>
+
+                Detect fire incidents and receive emergency guidance.
+
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+
+                🌊
+
+            </div>
+
+            <h3>
+
+                Flood Detection
+
+            </h3>
+
+            <p>
+
+                Identify floods quickly and view safety precautions.
+
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+
+                🌍
+
+            </div>
+
+            <h3>
+
+                Earthquake Detection
+
+            </h3>
+
+            <p>
+
+                Analyze earthquake damage images.
+
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+
+                🤖
+
+            </div>
+
+            <h3>
+
+                AI Assistant
+
+            </h3>
+
+            <p>
+
+                Ask questions related to prediction and disaster safety.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================== -->
+<!-- NEXT PART -->
+<!-- CLASSIFIER -->
+ <!-- ======================================== -->
+<!-- IMAGE CLASSIFIER -->
+<!-- ======================================== -->
+
+<section class="classifier"
+
+         id="classifier"> 
+
+    <div class="section-title">
+
+        <h2>
+
+            Image Classification
+
+        </h2>
+
+        <p>
+
+            Upload an image or use your live camera.
+            Preview it before prediction.
+
+        </p>
+
+    </div>
+
+    <div class="classifier-card">
+
+        <!-- Upload & Camera -->
+
+        <div class="top-buttons">
+
+            <label
+
+                for="fileInput"
+
+                class="upload-btn">
+
+                📂 Upload Image
+
+            </label>
+
+            <input
+
+                type="file"
+
+                id="fileInput"
+
+                accept="image/*"
+
+                hidden>
+
+            <button
+
+                id="startCameraBtn"
+
+                class="camera-btn">
+
+                📷 Live Camera
+
+            </button>
+
+        </div>
+
+        <!-- Live Camera -->
+
+        <div class="camera-area">
+
+            <video
+
+                id="video"
+
+                autoplay
+
+                playsinline
+
+                hidden>
+
+            </video>
+
+            <canvas
+
+                id="canvas"
+
+                hidden>
+
+            </canvas>
+
+            <button
+
+                id="captureBtn"
+
+                hidden>
+
+                📸 Capture Image
+
+            </button>
+
+        </div>
+
+        <!-- Preview -->
+
+        <div class="preview-area">
+
+            <h3>
+
+                🖼 Image Preview
+
+            </h3>
+
+            <img
+
+                id="previewImage"
+
+                src=""
+
+                hidden>
+
+        </div>
+
+        <!-- Predict -->
+
+        <div class="predict-area">
+
+            <button
+
+                id="predictBtn">
+
+                🔍 Predict Image
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================== -->
+<!-- LOADING -->
+<!-- ======================================== -->
+
+<div
+
+    id="loading"
+
+    hidden>
+
+    <div class="loader"></div>
+
+    <p>
+
+        Analyzing Image...
+
+    </p>
+
+</div>
+
+<!-- ======================================== -->
+<!-- NEXT PART -->
+<!-- Prediction Result -->
+ <!-- ======================================== -->
+<!-- PREDICTION RESULT -->
+<!-- ======================================== -->
+
+<section id="result"
+
+         class="result-section"
+
+         hidden>
+
+    <div class="section-title">
+
+        <h2>
+
+            📊 Prediction Result
+
+        </h2>
+
+    </div>
+
+    <div class="result-card">
+
+        <div class="prediction-box">
+
+            <h1 id="resultLabel">
+
+                FIRE
+
+            </h1>
+
+            <h3>
+
+                Confidence :
+
+                <span id="resultConfidence">
+
+                    98.64%
+
+                </span>
+
+            </h3>
+
+        </div>
+
+        <div
+
+            id="probList"
+
+            class="probability-bars">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================== -->
+<!-- EMERGENCY PRECAUTIONS -->
+<!-- ======================================== -->
+
+<section
+
+    id="precautionsCard"
+
+    class="precautions-section"
+
+    hidden>
+
+    <div class="section-title">
+
+        <h2>
+
+            🚨 Emergency Precautions
+
+        </h2>
+
+    </div>
+
+    <div class="precautions-card">
+
+        <ul id="precautionsList">
+
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================== -->
+<!-- AI ASSISTANT -->
+<!-- ======================================== -->
+
+<section
+
+    id="assistant"
+
+    class="assistant-section">
+
+    <div class="section-title">
+
+        <h2>
+
+            🤖 AI Disaster Assistant
+
+        </h2>
+
+        <p>
+
+            Ask questions about the latest prediction,
+            emergency precautions,
+            or disaster awareness.
+
+        </p>
+
+    </div>
+
+    <div class="assistant-card">
+
+        <!-- Chat -->
+
+        <div
+
+            id="chatWindow"
+
+            class="chat-window">
+
+        </div>
+
+        <!-- Input -->
+
+        <div class="chat-input">
+
+            <input
+
+                id="chatInput"
+
+                type="text"
+
+                placeholder="Ask something about the prediction...">
+
+            <button
+
+                id="sendChatBtn">
+
+                Send
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+<!-- ======================================== -->
+<!-- JAVASCRIPT -->
+<!-- ======================================== -->
+
+<script src="{{ url_for('static',
+filename='script.js') }}">
+
+</script>
+
+</body>
+
+</html>
